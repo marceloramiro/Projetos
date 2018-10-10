@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>corlet</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <ion-content padding>
+    <ion-grid>
+      <ion-row>
+      <ion-col col-8>
+        <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+      </ion-col>
+      <ion-col col-4>
+        <ion-item>
+                <ion-label>Empresa</ion-label>
+                <ion-select>
+                  <ion-option >teste</ion-option>
+                </ion-select>
+        </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-scroll scrollY="true" style="height:400px">
+    <ion-row>
+      <ion-col col-12>
+        <ion-list>
+          <button ion-item *ngFor="let item of items" (click)="colabPage(item)">
+            {{item.Nome}}
+          </button>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    </ion-scroll>
+    </ion-grid>
+</ion-content>

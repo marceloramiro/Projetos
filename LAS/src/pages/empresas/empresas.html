@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Empresas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+    <ion-col>
+        <h1 color="primary">Cadastrar - Renomear Empresas</h1>
+        <form>
+            <ion-item>
+              <ion-label>Empresa</ion-label>
+              <ion-input type="text" name="title" aria-placeholder="Nome da empresa"></ion-input>
+            </ion-item>
+            <button ion-button >Salvar</button>
+          </form>
+    </ion-col>
+    </ion-row>
+    <ion-row>
+    <ion-col>
+        <h1 color="primary">Procurar Empresas</h1>
+        <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+        <ion-scroll scrollY="true" style="height:300px">
+        <ion-list>
+          <button ion-item *ngFor="let item of items">
+            {{item.Nome}}
+          </button>
+        </ion-list>
+      </ion-scroll>
+    </ion-col>
+  </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,64 @@
+<!--
+  Generated template for the ColaboradoresPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Colaboradores</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+    <ion-col>
+        <h1 color="primary">Cadastrar - Renomear colaborador</h1>
+
+          <ion-row>
+            <ion-col col-6>
+            <ion-item>
+              <ion-label>Nome</ion-label>
+              <ion-input type="text" name="title" aria-placeholder="Nome" [(ngModel)]="nColab"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label>Empresa</ion-label>
+              <ion-select  interface="popover" [(ngModel)]="nEmpresa">
+                <ion-option *ngFor = "let empresa of empresas" [value]="empresa" >{{empresa.Nome}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          </ion-row>
+          <ion-row>
+            <button ion-button full (click)="inserirColab(nColab,nEmpresa.Codigo)">Inserir</button>
+          </ion-row>
+
+          <br>
+    </ion-col>
+    </ion-row>
+    <ion-row>
+    <ion-col>
+        <h1 color="primary">Procurar Colaborador</h1>
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+      <ion-scroll scrollY="true" style="height:300px">
+      <ion-list>
+        <button ion-item *ngFor="let item of items">
+          <ion-row>
+            <ion-col col-6>
+          {{item.Nome}}
+        </ion-col>
+        <ion-col col-6>
+          {{item.NomeEmpresa}}
+        </ion-col>
+          </ion-row>
+        </button>
+      </ion-list>
+    </ion-scroll>
+    </ion-col>
+  </ion-row>
+  </ion-grid>
+</ion-content>

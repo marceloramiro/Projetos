@@ -1,0 +1,46 @@
+page-colaborador-corlet {
+  /*
+  .titulo{
+    background-color:#1E88E5;
+    color:white;
+    border: 1px solid white;
+    font-weight: 500;
+  }
+  ion-col{
+    border-bottom: 1px solid rgb(206, 206, 206);
+    border-left:  1px solid rgb(206, 206, 206);
+    border-right:  1px solid rgb(206, 206, 206);
+  }
+  */
+  .dv1{
+    border: 2px solid rgba($color: #6237ff, $alpha: 0.3);
+    border-radius: 8px;
+  }
+  #row{
+    vertical-align: middle;
+    border-top: 1px solid rgba($color: #6237ff, $alpha: 0.3);
+  }
+  #cabecalho{
+    background-color:rgba($color: #6237ff, $alpha: 1.0);
+    color:white;
+  }
+  ion-scroll{
+    height:400px;
+    width: 100%
+  }
+  #teste ion-row:hover{
+    background-color: rgba(177, 191, 255, 0.493);
+  }
+  #cabecalho:hover{
+    background-color:rgba($color: #6237ff, $alpha: 1.0);
+    color:white;
+  }
+
+  #cb{
+    height:40px;
+  }
+
+  #teste{
+    width: 1500px
+  }
+}
