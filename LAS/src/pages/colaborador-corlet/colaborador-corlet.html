@@ -22,12 +22,37 @@
         <ion-col col-3>
           <ion-item>
           <ion-label>Data: </ion-label>
-          <ion-input [(ngModel)]="data" placeholder="02/09/2018" value="">
+          <ion-input type="date" [(ngModel)]="data">
           </ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
-          <button ion-button>Adicionar</button>
+          <button ion-button (click)="inserirCorlet({
+            'id':dados.Codigo,
+            'Nome':dados.Nome,
+            'Data':data,
+            'Pescoco':Pescoco,
+            'Regiao_cervical':Regiao_cervical,
+            'Costas_superior':Costas_superior,
+            'Costas_medio':Costas_medio,
+            'Costas_inferior':Costas_inferior,
+            'Bacia':Bacia,
+            'Ombro_E':Ombro_E,
+            'Braco_E':Braco_E,
+            'Cotovelo_E':Cotovelo_E,
+            'Punho_E':Punho_E,
+            'Antebraco_E':Antebraco_E,
+            'Mao_E':Mao_E,
+            'Coxa_E':Coxa_E,
+            'Perna_E':Perna_E,
+            'Ombro_D':Ombro_D,
+            'Braco_D':Braco_D,
+            'Cotovelo_D':Cotovelo_D,
+            'Antebraco_D':Antebraco_D,
+            'Punho_D':Punho_D,
+            'Mao_D':Mao_D,
+            'Coxa_D':Coxa_D,
+            'Perna_D':Perna_D})" >Adicionar</button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -324,7 +349,7 @@
   <ion-scroll scrollX="true" scrollY="true">
   <ion-row *ngFor="let teste of corlet" flex-wrap: nowrap id="row">
       <ion-col col-2>
-      <button ion-button icon-only clear small color="danger">
+      <button ion-button icon-only clear small color="danger" (click)="deleteCorlet(teste.CodiCorlet)">
           <ion-icon name="remove-circle"></ion-icon>
       </button>
           {{teste.Data}}</ion-col>

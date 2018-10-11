@@ -28,7 +28,7 @@
             <ion-item>
               <ion-label>Empresa</ion-label>
               <ion-select  interface="popover" [(ngModel)]="nEmpresa">
-                <ion-option *ngFor = "let empresa of empresas" [value]="empresa" >{{empresa.Nome}}</ion-option>
+                <ion-option *ngFor = "let empresa of empresas" [value]="empresa" >{{empresa.EmpNome}}</ion-option>
               </ion-select>
             </ion-item>
           </ion-col>
@@ -36,7 +36,6 @@
           <ion-row>
             <button ion-button full (click)="inserirColab(nColab,nEmpresa.Codigo)">Inserir</button>
           </ion-row>
-
           <br>
     </ion-col>
     </ion-row>

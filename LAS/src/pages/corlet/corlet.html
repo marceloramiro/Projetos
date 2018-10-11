@@ -15,8 +15,8 @@
       <ion-col col-4>
         <ion-item>
                 <ion-label>Empresa</ion-label>
-                <ion-select>
-                  <ion-option >teste</ion-option>
+                <ion-select [(ngModel)]="empresaSelect" (ionChange)="teste(empresaSelect.EmpCodigo)">
+                  <ion-option *ngFor = "let empresa of empresas" [value]="empresa" >{{empresa.EmpNome}}</ion-option>
                 </ion-select>
         </ion-item>
     </ion-col>

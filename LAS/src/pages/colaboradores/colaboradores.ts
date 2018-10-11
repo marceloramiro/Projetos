@@ -57,14 +57,13 @@ export class ColaboradoresPage {
     }
 
     inserirColab(nome:any,empresa:any){
-      this.service.inserirColab(nome,empresa).subscribe(data=>console.log(data));
+      this.service.inserirColab(nome,empresa);
       this.service.selectColab().subscribe(
         data=>{this.dados = data, this.items = data},
 
       )
       this.initializeItems()
       this.initializeEmpresas()
-      alert("Dados inseridos!")
     }
   }
 

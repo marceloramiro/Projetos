@@ -48,10 +48,18 @@ export class ColaboradorCorletPage {
       "Perna_D"]
 
   }
+  inserirCorlet(data:any[]){
+    this.service.inserirCorlet(data);
+    this.initializeItem(this.dados.Codigo);
+  }
   ionViewWillLoad(){
     this.initializeItem(this.dados.Codigo);
   }
   initializeItem(codigo){
-    this.service.selectCorlet(codigo).subscribe(data=>this.corlet = data)
+    this.service.selectCorlet(codigo).subscribe(data=>{this.corlet = data,console.log(data)})
+  }
+  deleteCorlet(codigo){
+    this.service.delCorlet(codigo).subscribe(data=>console.log(data));
+    this.initializeItem(this.dados.Codigo);
   }
   }

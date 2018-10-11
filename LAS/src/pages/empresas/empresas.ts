@@ -22,6 +22,14 @@ export class EmpresasPage {
     )
     this.initializeItems()
   }
+
+    inserirEmpresa(nomeEmp){
+      this.service.inserirEmp(nomeEmp);
+      this.service.selectEmp().subscribe(
+        data=>{this.dados = data, this.items = data}
+      )
+      this.initializeItems()
+    }
     initializeItems() {
       this.items = this.dados;
     }
@@ -36,7 +44,7 @@ export class EmpresasPage {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
-        return (item.Nome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.EmpNome.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
      }
     }

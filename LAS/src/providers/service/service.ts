@@ -12,30 +12,33 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ServiceProvider {
 
-  api:string="https://unenriched-moments.000webhostapp.com/apiLeo/";
+  api:string="http://localhost/GIT/API/";
 
   constructor(public http: HttpClient) {
 
   }
   //Select
   selectColab(){
-    return this.http.get(this.api+'apiRecColab.php');
+    return this.http.get(this.api+'getAlunos.php');
+  }
+  selectColabEmp(codigo){
+    return this.http.get(this.api+'getAlunosEmp.php?codigo='+codigo);
   }
   selectEmp(){
-    return this.http.get(this.api+'apiRecEmp.php');
+    return this.http.get(this.api+'getEmp.php');
   }
   selectCorlet(codigo){
-    return this.http.get(this.api+'apiRecCorlet.php?Codigo='+codigo);
+    return this.http.get(this.api+'getCorlet.php?codigo='+codigo);
   }
   //Insert
   inserirColab(nome,empresa){
-    return this.http.get(this.api+'apiInsColab.php?Nome='+nome+'&Empresa='+empresa);
+    return this.http.post(this.api+'setAluno.php',{"nome":nome,"empresa":empresa}).subscribe((data)=>console.log(nome,empresa));
   }
-  inserirEmp(){
-    return this.http.get(this.api+'apiInscEmp.php');
+  inserirEmp(nome){
+    return this.http.post(this.api+'setEmp.php',{"nome":nome}).subscribe((data)=>console.log(data));
   }
-  inserirCorlet(codigo){
-    return this.http.get(this.api+'apiInsCorlet.php?Codigo='+codigo);
+  inserirCorlet(data){
+    return this.http.post(this.api+'setCorlet.php',data).subscribe((data)=>console.log(data));
   }
   //Update
   updateColab(){
@@ -55,7 +58,7 @@ export class ServiceProvider {
     return this.http.get(this.api+'apiRecEmp.php');
   }
   delCorlet(codigo){
-    return this.http.get(this.api+'apiRecCorlet.php?Codigo='+codigo);
+    return this.http.get(this.api+'delCorlet.php?codigo='+codigo);
   }
 
 }

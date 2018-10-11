@@ -19,16 +19,30 @@ export class CorletPage {
 
   dados:any
   items:any
+  empresas:any
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider) {
     this.dados =[]
     this.items = []
+    this.empresas = []
   }
-
+  teste(emp){
+    this.service.selectColabEmp(emp).subscribe(
+      data=>{this.dados = data, this.items = data}
+    )
+    this.initializeItems()
+    this.initializeEmpresas()
+  }
   ionViewDidLoad() {
     this.service.selectColab().subscribe(
       data=>{this.dados = data, this.items = data}
     )
     this.initializeItems()
+    this.initializeEmpresas()
+  }
+  initializeEmpresas(){
+    this.service.selectEmp().subscribe(
+      data=>this.empresas = data
+    )
   }
     initializeItems() {
       this.items = this.dados;

@@ -14,9 +14,9 @@
         <form>
             <ion-item>
               <ion-label>Empresa</ion-label>
-              <ion-input type="text" name="title" aria-placeholder="Nome da empresa"></ion-input>
+              <ion-input type="text" name="title" aria-placeholder="Nome da empresa" [(ngModel)]="nomeEmp" ></ion-input>
             </ion-item>
-            <button ion-button >Salvar</button>
+            <button ion-button (click)="inserirEmpresa(nomeEmp)">Salvar</button>
           </form>
     </ion-col>
     </ion-row>
@@ -27,7 +27,7 @@
         <ion-scroll scrollY="true" style="height:300px">
         <ion-list>
           <button ion-item *ngFor="let item of items">
-            {{item.Nome}}
+            {{item.EmpNome}}
           </button>
         </ion-list>
       </ion-scroll>
