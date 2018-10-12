@@ -34,7 +34,7 @@
           </ion-col>
           </ion-row>
           <ion-row>
-            <button ion-button full (click)="inserirColab(nColab,nEmpresa.Codigo)">Inserir</button>
+            <button ion-button full (click)="inserirColab(nColab,nEmpresa.EmpCodigo)">Inserir</button>
           </ion-row>
           <br>
     </ion-col>
@@ -45,16 +45,20 @@
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
       <ion-scroll scrollY="true" style="height:300px">
       <ion-list>
-        <button ion-item *ngFor="let item of items">
-          <ion-row>
-            <ion-col col-6>
-          {{item.Nome}}
-        </ion-col>
-        <ion-col col-6>
-          {{item.NomeEmpresa}}
-        </ion-col>
-          </ion-row>
-        </button>
+          <ion-row *ngFor="let item of items">
+              <ion-col>
+                  <button ion-button icon-only small color="danger" start (click)="delColab(item.Codigo)">
+                      <ion-icon name="close"></ion-icon>
+                  </button>
+                  <button ion-button icon-only small color="secondary" start (click)="updateColab(item.Codigo)">
+                      <ion-icon name="create"></ion-icon>
+                  </button>
+                  <button ion-button clear style="font-size: 1.5em;width:90%;" (click)="colabPage(item)" color="dark">
+                    {{item.Nome}}
+                  </button>
+                  <hr>
+              </ion-col>
+            </ion-row>
       </ion-list>
     </ion-scroll>
     </ion-col>

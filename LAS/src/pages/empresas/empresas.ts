@@ -48,6 +48,10 @@ export class EmpresasPage {
       })
      }
     }
-
-
+    delEmpresa(codigo){
+      console.log(codigo)
+    }
+    updateEmpresa(codigo){
+      console.log(codigo)
+    }
 }

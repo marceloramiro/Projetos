@@ -65,6 +65,13 @@ export class ColaboradoresPage {
       this.initializeItems()
       this.initializeEmpresas()
     }
+
+    delColab(codigo){
+      console.log(codigo)
+    }
+    updateColab(codigo){
+      console.log(codigo)
+    }
   }
 
 

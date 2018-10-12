@@ -22,13 +22,12 @@
     </ion-col>
   </ion-row>
   <ion-scroll scrollY="true" style="height:400px">
-    <ion-row>
-      <ion-col col-12>
-        <ion-list>
-          <button ion-item *ngFor="let item of items" (click)="colabPage(item)">
+    <ion-row *ngFor="let item of items">
+      <ion-col>
+          <button ion-button clear style="font-size: 1.5em;width:90%;" (click)="colabPage(item)" color="dark">
             {{item.Nome}}
           </button>
-        </ion-list>
+          <hr>
       </ion-col>
     </ion-row>
     </ion-scroll>
