@@ -1,0 +1,474 @@
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { ServiceProvider } from '../../providers/service/service';
+import * as jsPDF from 'jspdf';
+import { Chart } from 'chart.js';
+import { DomSharedStylesHost } from '@angular/platform-browser/src/dom/shared_styles_host';
+
+
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+  @ViewChild('content') content:ElementRef;
+  @ViewChild('barCanvas') barCanvas;
+    @ViewChild('doughnutCanvas') doughnutCanvas;
+    @ViewChild('doughnutCanvas2') doughnutCanvas2;
+    @ViewChild('lineCanvas') lineCanvas;
+
+    barChart: any;
+    doughnutChart: any;
+    doughnutChart2: any;
+    lineChart: any;
+    corlet:any = []
+    xy = 0
+  constructor(public navCtrl: NavController, public service: ServiceProvider) {
+    
+  }
+  
+
+  public downloadPDF(){
+    let doc = new jsPDF();
+
+    let specialElementHandlers = {
+      '#editor':function(element,renderer){
+        return true;
+      }
+    };
+
+    let content = this.content.nativeElement;
+
+    doc.fromHTML(content.innerHTML,15,15,{
+      'width':190,
+      'elementHandlers': specialElementHandlers
+    });
+
+    doc.save('test.pdf');
+  }
+
+  ionViewWillEnter(){}
+
+  teste(){
+    this.service.selectCorlet(2).subscribe(dados=>{
+      console.log(dados)
+      let x = 0
+      let pescoco         = []
+      let regiao_cervical = []
+      let costas_superior = []
+      let costas_medio    = []
+      let costas_inferior = []
+      let bacia           = []
+      let ombro_e         = []
+      let braco_e         = []
+      let cotovelo_e      = []
+      let punho_e         = []
+      let antebraco_e     = []
+      let mao_e           = []
+      let coxa_e          = []
+      let perna_e         = []
+      let ombro_d         = []
+      let braco_d         = []
+      let cotovelo_d      = []
+      let antebraco_d     = []
+      let punho_d         = []
+      let mao_d           = []
+      let coxa_d          = []
+      let perna_d         = []
+
+      //const reducer = (accumulator, currentValue) => accumulator + currentValue
+      let dataCorlet:any[][] = [[],[]]
+      for (var key in dados) {
+       dataCorlet[x][0]=  Number.parseInt(dados[key].Pescoco);
+       console.log(dataCorlet[x][0])
+       dataCorlet[x][1]=  Number.parseInt(dados[key].Regiao_cervical);
+       console.log(dataCorlet[x][1])
+       dataCorlet[x][2]=  Number.parseInt(dados[key].Costas_superior);
+       console.log(dataCorlet[x][2])
+       dataCorlet[x][3]=  Number.parseInt(dados[key].Costas_medio);
+       dataCorlet[x][4]=  Number.parseInt(dados[key].Costas_inferior);
+       dataCorlet[x][5]=  Number.parseInt(dados[key].Bacia);
+       dataCorlet[x][6]=  Number.parseInt(dados[key].Ombro_E);
+       dataCorlet[x][7]=  Number.parseInt(dados[key].Braco_E);
+       dataCorlet[x][8]=  Number.parseInt(dados[key].Cotovelo_E);
+       dataCorlet[x][9]=  Number.parseInt(dados[key].Punho_E);
+       dataCorlet[x][10]=  Number.parseInt(dados[key].Antebraco_E);
+       dataCorlet[x][11]=  Number.parseInt(dados[key].Mao_E);
+       dataCorlet[x][12]=  Number.parseInt(dados[key].Coxa_E);
+       dataCorlet[x][13]=  Number.parseInt(dados[key].Perna_E);
+       dataCorlet[x][14]=  Number.parseInt(dados[key].Ombro_D);
+       dataCorlet[x][15]=  Number.parseInt(dados[key].Braco_D);
+       dataCorlet[x][16]=  Number.parseInt(dados[key].Cotovelo_D);
+       dataCorlet[x][17]=  Number.parseInt(dados[key].Antebraco_D);
+       dataCorlet[x][18]=  Number.parseInt(dados[key].Punho_D);
+       dataCorlet[x][19]=  Number.parseInt(dados[key].Mao_D);
+       dataCorlet[x][20]=  Number.parseInt(dados[key].Coxa_D);
+       dataCorlet[x][21]=  Number.parseInt(dados[key].Perna_D);
+       x++
+       console.log(x)
+    }
+    /*
+    let dataCorlet:Array<any>
+    dataCorlet = [0]
+    dataCorlet =[
+      pescoco.reduce(reducer)/pescoco.length,
+      regiao_cervical.reduce(reducer)/regiao_cervical.length,
+      costas_superior.reduce(reducer)/costas_superior.length,
+      costas_medio.reduce(reducer)/costas_medio.length,
+      costas_inferior.reduce(reducer)/costas_inferior.length,
+      bacia.reduce(reducer)/bacia.length,
+      ombro_e.reduce(reducer)/ombro_e.length,
+      braco_e.reduce(reducer)/braco_e.length,
+      cotovelo_e.reduce(reducer)/cotovelo_e.length,
+      punho_e.reduce(reducer)/punho_e.length,
+      antebraco_e.reduce(reducer)/antebraco_e.length,
+      mao_e.reduce(reducer)/mao_e.length,
+      coxa_e.reduce(reducer)/coxa_e.length,
+      perna_e.reduce(reducer)/perna_e.length,
+
+      ombro_d.reduce(reducer)/ombro_d.length,
+      braco_d.reduce(reducer)/braco_d.length,
+      cotovelo_d.reduce(reducer)/cotovelo_d.length,
+      punho_d.reduce(reducer)/punho_d.length,
+      antebraco_d.reduce(reducer)/antebraco_d.length,
+      mao_d.reduce(reducer)/mao_d.length,
+      coxa_d.reduce(reducer)/coxa_d.length,
+      perna_d.reduce(reducer)/perna_d.length
+    ]
+    console.log(dataCorlet)
+    */
+      
+    this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+        type: 'bar',
+        data: {
+            labels: [
+            "Pescoco",
+            "Regiao_cervical",
+            "Costas_superior",
+            "Costas_medio",
+            "Costas_inferior",
+            "Bacia",
+            "Ombro_E",
+            "Braco_E",
+            "Cotovelo_E",
+            "Punho_E",
+            "Antebraco_E",
+            "Mao_E",
+            "Coxa_E",
+            "Perna_E",
+            "Ombro_D",
+            "Braco_D",
+            "Cotovelo_D",
+            "Antebraco_D",
+            "Punho_D",
+            "Mao_D",
+            "Coxa_D",
+            "Perna_D"],
+            datasets: [{
+                label: 'Grau de ****',
+                data:[
+                  dataCorlet[0][0],
+                  dataCorlet[0][1],
+                  dataCorlet[0][2],
+                  dataCorlet[0][3],
+                  dataCorlet[0][4],
+                  dataCorlet[0][5],
+                  dataCorlet[0][6],
+                  dataCorlet[0][7],
+                  dataCorlet[0][8],
+                  dataCorlet[0][9],
+                  dataCorlet[0][10],
+                  dataCorlet[0][11],
+                  dataCorlet[0][12],
+                  dataCorlet[0][13],
+                  dataCorlet[0][15],
+                  dataCorlet[0][16],
+                  dataCorlet[0][17],
+                  dataCorlet[0][18],
+                  dataCorlet[0][19],
+                  dataCorlet[0][20],
+                  dataCorlet[0][21]
+                ],
+            backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                    "#FF6384",
+                ]
+            },
+            {
+              label: 'Grau de ****',
+              data:[
+                  dataCorlet[1][0],
+                  dataCorlet[1][1],
+                  dataCorlet[1][2],
+                  dataCorlet[1][3],
+                  dataCorlet[1][4],
+                  dataCorlet[1][5],
+                  dataCorlet[1][6],
+                  dataCorlet[1][7],
+                  dataCorlet[1][8],
+                  dataCorlet[1][9],
+                  dataCorlet[1][10],
+                  dataCorlet[1][11],
+                  dataCorlet[1][12],
+                  dataCorlet[1][13],
+                  dataCorlet[1][15],
+                  dataCorlet[1][16],
+                  dataCorlet[1][17],
+                  dataCorlet[1][18],
+                  dataCorlet[1][19],
+                  dataCorlet[1][20],
+                  dataCorlet[1][21]
+              ],
+          backgroundColor: [
+                    
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+              ],
+              hoverBackgroundColor: [
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+                  "#36A2EB",
+              ]
+          }],
+        }
+
+    });//fin charts
+  /*})
+  this.service.selectCorlet(3).subscribe(dados=>{
+    let x = 0
+    let pescoco         = []
+    let regiao_cervical = []
+    let costas_superior = []
+    let costas_medio    = []
+    let costas_inferior = []
+    let bacia           = []
+    let ombro_e         = []
+    let braco_e         = []
+    let cotovelo_e      = []
+    let punho_e         = []
+    let antebraco_e     = []
+    let mao_e           = []
+    let coxa_e          = []
+    let perna_e         = []
+    let ombro_d         = []
+    let braco_d         = []
+    let cotovelo_d      = []
+    let antebraco_d     = []
+    let punho_d         = []
+    let mao_d           = []
+    let coxa_d          = []
+    let perna_d         = []
+    
+    const reducer = (accumulator, currentValue) => accumulator + currentValue
+    for (var key in dados) {
+     pescoco[key]=         Number.parseInt(dados[key].Pescoco);
+     regiao_cervical[key]= Number.parseInt(dados[key].Regiao_cervical);
+     costas_superior[key]= Number.parseInt(dados[key].Costas_superior);
+     costas_medio[key]=    Number.parseInt(dados[key].Costas_medio);
+     costas_inferior[key]= Number.parseInt(dados[key].Costas_inferior);
+     bacia[key]=           Number.parseInt(dados[key].Bacia);
+     ombro_e[key]=         Number.parseInt(dados[key].Ombro_E);
+     braco_e[key]=         Number.parseInt(dados[key].Braco_E);
+     cotovelo_e[key]=      Number.parseInt(dados[key].Cotovelo_E);
+     punho_e[key]=         Number.parseInt(dados[key].Punho_E);
+     antebraco_e[key]=     Number.parseInt(dados[key].Antebraco_E);
+     mao_e[key]=           Number.parseInt(dados[key].Mao_E);
+     coxa_e[key]=          Number.parseInt(dados[key].Coxa_E);
+     perna_e[key]=         Number.parseInt(dados[key].Perna_E);
+     ombro_d[key]=         Number.parseInt(dados[key].Ombro_D);
+     braco_d[key]=         Number.parseInt(dados[key].Braco_D);
+     cotovelo_d[key]=      Number.parseInt(dados[key].Cotovelo_D);
+     antebraco_d[key]=     Number.parseInt(dados[key].Antebraco_D);
+     punho_d[key]=         Number.parseInt(dados[key].Punho_D);
+     mao_d[key]=           Number.parseInt(dados[key].Mao_D);
+     coxa_d[key]=          Number.parseInt(dados[key].Coxa_D);
+     perna_d[key]=         Number.parseInt(dados[key].Perna_D);
+     x++
+  }
+  let dataCorlet:Array<any>
+  dataCorlet = [0]
+  dataCorlet =[
+    pescoco.reduce(reducer)/pescoco.length,
+    regiao_cervical.reduce(reducer)/regiao_cervical.length,
+    costas_superior.reduce(reducer)/costas_superior.length,
+    costas_medio.reduce(reducer)/costas_medio.length,
+    costas_inferior.reduce(reducer)/costas_inferior.length,
+    bacia.reduce(reducer)/bacia.length,
+    ombro_e.reduce(reducer)/ombro_e.length,
+    braco_e.reduce(reducer)/braco_e.length,
+    cotovelo_e.reduce(reducer)/cotovelo_e.length,
+    punho_e.reduce(reducer)/punho_e.length,
+    antebraco_e.reduce(reducer)/antebraco_e.length,
+    mao_e.reduce(reducer)/mao_e.length,
+    coxa_e.reduce(reducer)/coxa_e.length,
+    perna_e.reduce(reducer)/perna_e.length,
+
+    ombro_d.reduce(reducer)/ombro_d.length,
+    braco_d.reduce(reducer)/braco_d.length,
+    cotovelo_d.reduce(reducer)/cotovelo_d.length,
+    punho_d.reduce(reducer)/punho_d.length,
+    antebraco_d.reduce(reducer)/antebraco_d.length,
+    mao_d.reduce(reducer)/mao_d.length,
+    coxa_d.reduce(reducer)/coxa_d.length,
+    perna_d.reduce(reducer)/perna_d.length
+  ]
+  this.doughnutChart2 = new Chart(this.doughnutCanvas2.nativeElement, {
+    type: 'radar',
+    data: {
+        labels: [
+        "Pescoco",
+        "Regiao_cervical",
+        "Costas_superior",
+        "Costas_medio",
+        "Costas_inferior",
+        "Bacia",
+        "Ombro_E",
+        "Braco_E",
+        "Cotovelo_E",
+        "Punho_E",
+        "Antebraco_E",
+        "Mao_E",
+        "Coxa_E",
+        "Perna_E",
+        "Ombro_D",
+        "Braco_D",
+        "Cotovelo_D",
+        "Antebraco_D",
+        "Punho_D",
+        "Mao_D",
+        "Coxa_D",
+        "Perna_D"],
+        datasets: [{
+            label: 'Grau de ****',
+            data:[
+              dataCorlet[0],
+              dataCorlet[1],
+              dataCorlet[2],
+              dataCorlet[3],
+              dataCorlet[4],
+              dataCorlet[5],
+              dataCorlet[6],
+              dataCorlet[7],
+              dataCorlet[8],
+              dataCorlet[9],
+              dataCorlet[10],
+              dataCorlet[11],
+              dataCorlet[12],
+              dataCorlet[13],
+              dataCorlet[15],
+              dataCorlet[16],
+              dataCorlet[17],
+              dataCorlet[18],
+              dataCorlet[19],
+              dataCorlet[20],
+              dataCorlet[21]
+            ],
+        backgroundColor: [
+                //'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            hoverBackgroundColor: [
+                //"#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+        }]
+    }
+
+});*///fin charts
+})
+  }
+
+}

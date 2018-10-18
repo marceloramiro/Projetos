@@ -24,11 +24,8 @@ export class EmpresasPage {
   }
 
     inserirEmpresa(nomeEmp){
+      alert("Empresa Adicionada!")
       this.service.inserirEmp(nomeEmp);
-      this.service.selectEmp().subscribe(
-        data=>{this.dados = data, this.items = data}
-      )
-      this.initializeItems()
     }
     initializeItems() {
       this.items = this.dados;

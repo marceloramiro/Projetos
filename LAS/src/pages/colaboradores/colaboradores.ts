@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
-
+import { UpdateColaboradoresPage } from '../update-colaboradores/update-colaboradores';
+import { ToastController } from 'ionic-angular';
 /**
  * Generated class for the ColaboradoresPage page.
  *
@@ -19,7 +20,8 @@ export class ColaboradoresPage {
   items:any
   empresas:any
   empresaFiltro:any
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider) {
+  key:number
+  constructor(public toastCtrl: ToastController,public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,public alertCtrl:AlertController) {
     this.dados =[]
     this.empresas = []
     this.items = []
@@ -51,26 +53,45 @@ export class ColaboradoresPage {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
-        return (item.Nome.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        return item.Nome!=null?(item.Nome.indexOf(val.toLowerCase()) > -1):null
       })
      }
     }
+    presentToast(message) {
+      const toast = this.toastCtrl.create({
+        message: message,
+        duration: 3000,
+        position:'middle'
+      });
+      toast.present();
+    }
 
     inserirColab(nome:any,empresa:any){
-      this.service.inserirColab(nome,empresa);
-      this.service.selectColab().subscribe(
-        data=>{this.dados = data, this.items = data},
-
-      )
-      this.initializeItems()
-      this.initializeEmpresas()
+      if((nome || empresa)==null || (nome || empresa)==undefined ||(nome || empresa)==''||(nome || empresa)==""){
+        this.presentToast("Nome e Empresa OBRIGATÓRIO")
+      }else{
+        this.presentToast("Adicionado com SUCESSO!")
+        this.service.inserirColab(nome,empresa);
+        this.navCtrl.pop();
+        this.navCtrl.push(ColaboradoresPage);
+    }
+    
     }
 
     delColab(codigo){
-      console.log(codigo)
+      this.service.delColab(codigo).subscribe((data)=>console.log(data))
     }
-    updateColab(codigo){
-      console.log(codigo)
+    updateColab(codigo,nome,empresa){
+      let colaborador = {
+        nome:nome,
+        codigo:codigo,
+        empresa:empresa,
+      }
+      let empresas = {
+        empresa:this.empresas
+      }
+      console.log(colaborador)
+      this.navCtrl.push(UpdateColaboradoresPage,{colaborador,empresas});
     }
   }
 

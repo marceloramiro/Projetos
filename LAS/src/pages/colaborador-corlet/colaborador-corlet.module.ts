@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule,IonicModule } from 'ionic-angular';
 import { ColaboradorCorletPage } from './colaborador-corlet';
 
 @NgModule({
@@ -10,4 +10,4 @@ import { ColaboradorCorletPage } from './colaborador-corlet';
     IonicPageModule.forChild(ColaboradorCorletPage),
   ],
 })
-export class ColaboradorCorletPageModule {}
+export  class ColaboradorCorletPageModule {}

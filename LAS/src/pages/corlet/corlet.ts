@@ -20,12 +20,14 @@ export class CorletPage {
   dados:any
   items:any
   empresas:any
+  empNome ='Todas'
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider) {
     this.dados =[]
     this.items = []
     this.empresas = []
   }
-  teste(emp){
+  teste(emp,empNome){
+    this.empNome = empNome;
     this.service.selectColabEmp(emp).subscribe(
       data=>{this.dados = data, this.items = data}
     )
