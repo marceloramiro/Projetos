@@ -56,7 +56,7 @@
                   <button ion-button icon-only small color="secondary" start (click)="updateColab(item.Codigo,item.Nome,item.Empresa)">
                       <ion-icon name="create"></ion-icon>
                   </button>
-                  <button ion-button clear style="font-size: 1.5em;width:50%;" color="dark">
+                  <button ion-button clear style="font-size: 1.5em;width:50%;" color="dark" (click)="colabPage(item)">
                     {{item.Nome}}
                   </button>
                   <button ion-button clear style="font-size: 1.5em;width:40%;" color="primary">

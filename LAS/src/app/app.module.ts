@@ -15,6 +15,7 @@ import { ColaboradorCorletPage } from '../pages/colaborador-corlet/colaborador-c
 import { ServiceProvider } from '../providers/service/service';
 import { HttpClientModule, HttpResponse } from '@angular/common/http';
 import { Http, HttpModule } from '@angular/http';
+import { ColorpickProvider } from '../providers/colorpick/colorpick';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,8 @@ import { Http, HttpModule } from '@angular/http';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServiceProvider,
+    ColorpickProvider,
+    ColorpickProvider,
   ]
 })
 export class AppModule {}

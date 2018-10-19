@@ -61,26 +61,22 @@
     <ion-grid>
       <ion-row>
         <ion-col col-2>
-            <ion-item>
-                <ion-label>Pescoço</ion-label>
+            <ion-item (keyup.enter)="keytab($event)">
+                <ion-label floating>Pescoço</ion-label>
                 <ion-input [(ngModel)]="Pescoco" interface="popover" >
                 </ion-input>
               </ion-item>
         </ion-col>
         <ion-col col-2>
             <ion-item>
-                <ion-label>Região cervical</ion-label>
-                <ion-input [(ngModel)]="Regiao_cervical" interface="popover" tabindex="2">
-                  
-                  
-                  
-                  
+                <ion-label floating>Região cervical</ion-label>
+                <ion-input [(ngModel)]="Regiao_cervical" interface="popover">
                 </ion-input>
               </ion-item>
         </ion-col>
         <ion-col col-2>
             <ion-item>
-                <ion-label>Costas superior</ion-label>
+                <ion-label floating>Costas superior</ion-label>
                 <ion-input [(ngModel)]="Costas_superior"interface="popover">
                   
                   
@@ -91,7 +87,7 @@
         </ion-col>
         <ion-col col-2>
             <ion-item>
-                <ion-label>Costas medio</ion-label>
+                <ion-label floating>Costas medio</ion-label>
                 <ion-input [(ngModel)]="Costas_medio"interface="popover">
                   
                   
@@ -102,7 +98,7 @@
         </ion-col>
         <ion-col col-2>
             <ion-item>
-                <ion-label>Costas inferior</ion-label>
+                <ion-label floating>Costas inferior</ion-label>
                 <ion-input [(ngModel)]="Costas_inferior"interface="popover">
                   
                   
@@ -113,7 +109,7 @@
         </ion-col>
         <ion-col col-2>
             <ion-item>
-                <ion-label>Bacia</ion-label>
+                <ion-label floating>Bacia</ion-label>
                 <ion-input [(ngModel)]="Bacia"interface="popover">
                   
                   
@@ -126,7 +122,7 @@
       <ion-row>
           <ion-col col-2>
               <ion-item>
-                  <ion-label>Ombro_E</ion-label>
+                  <ion-label floating>Ombro_E</ion-label>
                   <ion-input [(ngModel)]="Ombro_E"interface="popover">
                     
                     
@@ -137,7 +133,7 @@
           </ion-col>
           <ion-col col-2>
               <ion-item>
-                  <ion-label>Braco_E</ion-label>
+                  <ion-label floating>Braco_E</ion-label>
                   <ion-input [(ngModel)]="Braco_E"interface="popover">
                     
                     
@@ -148,7 +144,7 @@
           </ion-col>
           <ion-col col-2>
               <ion-item>
-                  <ion-label>Cotovelo_E</ion-label>
+                  <ion-label floating>Cotovelo_E</ion-label>
                   <ion-input [(ngModel)]="Cotovelo_E"interface="popover">
                     
                     
@@ -159,7 +155,7 @@
           </ion-col>
           <ion-col col-2>
               <ion-item>
-                  <ion-label>Punho_E</ion-label>
+                  <ion-label floating>Punho_E</ion-label>
                   <ion-input [(ngModel)]="Punho_E"interface="popover">
                     
                     
@@ -170,7 +166,7 @@
           </ion-col>
           <ion-col col-2>
               <ion-item>
-                  <ion-label>Antebraco_E</ion-label>
+                  <ion-label floating>Antebraco_E</ion-label>
                   <ion-input [(ngModel)]="Antebraco_E"interface="popover">
                     
                     
@@ -181,7 +177,7 @@
           </ion-col>
           <ion-col col-2>
               <ion-item>
-                  <ion-label>Mao_E</ion-label>
+                  <ion-label floating>Mao_E</ion-label>
                   <ion-input [(ngModel)]="Mao_E"interface="popover">
                     
                     
@@ -194,7 +190,7 @@
         <ion-row>
             <ion-col col-2>
                 <ion-item>
-                    <ion-label>Coxa_E</ion-label>
+                    <ion-label floating>Coxa_E</ion-label>
                     <ion-input [(ngModel)]="Coxa_E"interface="popover">
                       
                       
@@ -205,7 +201,7 @@
             </ion-col>
             <ion-col col-2>
                 <ion-item>
-                    <ion-label>Perna_E</ion-label>
+                    <ion-label floating>Perna_E</ion-label>
                     <ion-input [(ngModel)]="Perna_E"interface="popover">
                       
                       
@@ -216,7 +212,7 @@
             </ion-col>
             <ion-col col-2>
                 <ion-item>
-                    <ion-label>Ombro_D</ion-label>
+                    <ion-label floating>Ombro_D</ion-label>
                     <ion-input [(ngModel)]="Ombro_D"interface="popover">
                       
                       
@@ -227,7 +223,7 @@
             </ion-col>
             <ion-col col-2>
                 <ion-item>
-                    <ion-label>Braco_D</ion-label>
+                    <ion-label floating>Braco_D</ion-label>
                     <ion-input [(ngModel)]="Braco_D"interface="popover">
                       
                       
@@ -238,7 +234,7 @@
             </ion-col>
             <ion-col col-2>
                 <ion-item>
-                    <ion-label>Cotovelo_D</ion-label>
+                    <ion-label floating>Cotovelo_D</ion-label>
                     <ion-input [(ngModel)]="Cotovelo_D"interface="popover">
                       
                       
@@ -249,7 +245,7 @@
             </ion-col>
             <ion-col col-2>
                 <ion-item>
-                    <ion-label>Antebraco_D</ion-label>
+                    <ion-label floating>Antebraco_D</ion-label>
                     <ion-input [(ngModel)]="Antebraco_D"interface="popover">
                       
                       
@@ -262,7 +258,7 @@
           <ion-row>
               <ion-col col-2>
                   <ion-item>
-                      <ion-label>Punho_D</ion-label>
+                      <ion-label floating>Punho_D</ion-label>
                       <ion-input [(ngModel)]="Punho_D"interface="popover">
                         
                         
@@ -273,7 +269,7 @@
               </ion-col>
               <ion-col col-2>
                   <ion-item>
-                      <ion-label>Mao_D</ion-label>
+                      <ion-label floating>Mao_D</ion-label>
                       <ion-input [(ngModel)]="Mao_D"interface="popover">
                         
                         
@@ -284,7 +280,7 @@
               </ion-col>
               <ion-col col-2>
                   <ion-item>
-                      <ion-label>Coxa_D</ion-label>
+                      <ion-label floating>Coxa_D</ion-label>
                       <ion-input [(ngModel)]="Coxa_D"interface="popover">
                         
                         
@@ -295,8 +291,8 @@
               </ion-col>
               <ion-col col-2>
                   <ion-item>
-                      <ion-label>Perna_D</ion-label>
-                      <ion-input [(ngModel)]="Perna_D"interface="popover">
+                      <ion-label floating  floating>Perna_D</ion-label>
+                      <ion-input [(ngModel)]="Perna_D" interface="popover">
                         
                         
                         

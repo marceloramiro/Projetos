@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { ServiceProvider } from '../../providers/service/service';
 import { UpdateColaboradoresPage } from '../update-colaboradores/update-colaboradores';
 import { ToastController } from 'ionic-angular';
+import { ColaboradorCorletPage } from '../colaborador-corlet/colaborador-corlet';
 /**
  * Generated class for the ColaboradoresPage page.
  *
@@ -56,6 +57,9 @@ export class ColaboradoresPage {
         return item.Nome!=null?(item.Nome.indexOf(val.toLowerCase()) > -1):null
       })
      }
+    }
+    colabPage(colab){
+      this.navCtrl.push(ColaboradorCorletPage,{item:colab});
     }
     presentToast(message) {
       const toast = this.toastCtrl.create({

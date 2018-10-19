@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, IonicModule } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 
@@ -14,7 +14,7 @@ export class ColaboradorCorletPage {
   corpo = []
   arrayCorpo:any[][]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider) {
+  constructor(private elementRef: ElementRef,public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider) {
     this.arrayCorpo =[[],[],[],[]]
     this.dados = navParams.get('item')
     this.corpo = ["Pescoco",

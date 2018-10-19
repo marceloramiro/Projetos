@@ -1,10 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import * as jsPDF from 'jspdf';
 import { Chart } from 'chart.js';
-import { DomSharedStylesHost } from '@angular/platform-browser/src/dom/shared_styles_host';
-import { debugOutputAstAsTypeScript } from '@angular/compiler';
+import { ColorpickProvider } from '../../providers/colorpick/colorpick';
 
 
 @Component({
@@ -13,7 +12,6 @@ import { debugOutputAstAsTypeScript } from '@angular/compiler';
 })
 export class HomePage {
   @ViewChild('content') content:ElementRef;
-  @ViewChild('barCanvas') barCanvas;
     @ViewChild('doughnutCanvas') doughnutCanvas;
     @ViewChild('doughnutCanvas2') doughnutCanvas2;
     @ViewChild('lineCanvas') lineCanvas;
@@ -24,7 +22,14 @@ export class HomePage {
     xy = 0
     data = []
     data2 = []
-  constructor(public navCtrl: NavController, public service: ServiceProvider) { 
+    empNome;
+    dados;
+    items;
+    empresas;
+  constructor(public colorpick:ColorpickProvider,public navCtrl: NavController, public service: ServiceProvider, public menuCtrl:MenuController) { 
+    this.dados =[]
+    this.items = []
+    this.empresas = []
   }
   
 
@@ -33,11 +38,12 @@ export class HomePage {
       var canvas = this.doughnutCanvas2.nativeElement
       //creates image
       var canvasImg = canvas.toDataURL("image/png/;base64", 1.0);
-      
+      var logo = "https://scontent.fcgh10-1.fna.fbcdn.net/v/t1.0-9/32764883_1661851937255632_56107575854235648_n.png?_nc_cat=104&_nc_ht=scontent.fcgh10-1.fna&oh=308a29f5f6f079ec0de53d9f3f2beb69&oe=5C45823F"
       //creates PDF from img
       var doc = new jsPDF('landscape');
       doc.setFontSize(20);
-      doc.text(140, 15, "Leo");
+      doc.text(120, 15, "Grafico CORLET");
+      doc.addImage(logo,'jpg',15,5,25,25)
       doc.addImage(canvasImg, 'png', 10, 30, 280, 170 );
       doc.save('Relatorio Corlet.pdf');
     }
@@ -45,6 +51,17 @@ export class HomePage {
 
   ionViewWillEnter(){
     this.createChart();
+  }
+
+  ionViewDidEnter(){
+    this.menuCtrl.open();
+    this.initializeEmpresas();
+  }
+
+  initializeEmpresas(){
+    this.service.selectEmp().subscribe(
+      data=>this.empresas = data
+    )
   }
 
   createChart(){
@@ -75,12 +92,23 @@ export class HomePage {
         "Perna_D"],
         datasets: this.data2,
     },options: {
+      legend: {
+      labels: {
+          fontColor: "black",
+          fontSize: 18
+      },
+  },
       scales: {
           yAxes: [{
               ticks: {
                   beginAtZero:true
               }
-          }]
+          }],
+          xAxes: [{
+            ticks: {
+                fontColor: "black",
+            }
+        }]
       }
   }
   })
@@ -121,7 +149,7 @@ export class HomePage {
   })
   }
 
-  addData2(chart, data,label,color,borderColor) {
+  addData2(chart, data,label,color) {
     this.data2.push({
       label:label,
       data: [],
@@ -150,30 +178,6 @@ export class HomePage {
         color,
         color,
       ],
-      borderColor: [
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-      ],
       borderWidth: 1
   })
     data.forEach(dado => {
@@ -186,7 +190,20 @@ export class HomePage {
     
     chart.update();
 }
-  addData(chart, data,label,color,borderColor) {
+removeData(chart,chart2) {
+  this.data.pop()
+    chart.data.datasets.forEach(element => {
+      element.data.pop()
+});
+this.data2.pop()
+chart2.data.datasets.forEach(element => {
+  element.data.pop()
+});
+  
+  chart.update();
+  chart2.update();
+}
+  addData(chart, data,label,color) {
     this.data.push({
       label:label,
       data: [],
@@ -215,30 +232,6 @@ export class HomePage {
         color,
         color,
       ],
-      borderColor: [
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-          borderColor,
-      ],
       borderWidth: 1
   })
     data.forEach(dado => {
@@ -251,15 +244,15 @@ export class HomePage {
     
     chart.update();
 }
-teste(){
-  this.service.selectCorlet1(20).subscribe(dados=>{
-  this.addData(this.doughnutChart,this.tiraMedia(dados),"01/02/2018",'#3498db','#2980b9');
-  this.addData2(this.doughnutChart2,this.tiraMedia(dados),"01/02/2018",'#3498db','#2980b9');
-})
-  this.service.selectCorlet2(19).subscribe(dados=>{
-  this.addData(this.doughnutChart,this.tiraMedia(dados),"01/02/2019",'#e74c3c','#c0392b');
-  this.addData2(this.doughnutChart2,this.tiraMedia(dados),"01/02/2019",'#e74c3c','#c0392b');
-})
+iniGrafic(diaInicial,diaFinal,empresa){
+  let label = diaInicial+" a "+diaFinal;
+  let cor =this.colorpick.setColor()
+  this.service.selectCorlet2(diaInicial,diaFinal,empresa).subscribe(dados=>{
+  this.addData(this.doughnutChart,this.tiraMedia(dados),label,cor);
+  this.addData2(this.doughnutChart2,this.tiraMedia(dados),label,cor);
+})}
+
+randColors(){
 
 }
 

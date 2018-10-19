@@ -34,13 +34,13 @@ export class ServiceProvider {
     //ok
     return this.http.get(this.api+'getCorlet.php?codigo='+codigo);
   }
-  selectCorlet1(codigo){
+  //selectCorlet1(codigo){
     //ok
-    return this.http.get(this.api+'getCorlet1Grafic.php?codigo='+codigo);
-  }
-  selectCorlet2(codigo){
+    //return this.http.get(this.api+'getCorlet1Grafic.php?codigo='+codigo);
+  //}
+  selectCorlet2(dataInicial:string,dataFinal:string,empresa){
     //ok
-    return this.http.get(this.api+'getCorlet2Grafic.php?codigo='+codigo);
+    return this.http.post(this.api+'getCorlet2Grafic.php?',{ini:dataInicial,fin:dataFinal,empresa:empresa});
   }
   //Insert
   inserirColab(nome,empresa){

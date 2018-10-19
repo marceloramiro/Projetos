@@ -3,19 +3,42 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Grafico</ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding>
-  <div id="content" #content>
-  <h3>Ionic Menu Starter</h3>
+  <ion-row>
+    <ion-col col-4>
+        <ion-item>
+                <ion-label>Empresa</ion-label>
+                <ion-select interface="popover" [(ngModel)]="empresaSelect"> <!-- (ionChange)="teste(empresaSelect.EmpCodigo,empresaSelect.EmpNome)"-->
+                  <ion-option *ngFor = "let empresa of empresas" [value]="empresa" >{{empresa.EmpNome}}</ion-option>
+                </ion-select>
+        </ion-item>
+    </ion-col>
+    <ion-col col-4>
+    <button ion-button (click)="iniGrafic(diaInicial,diaFinal,empresaSelect.EmpCodigo)">Gerar Grafico</button>
+    <button ion-button color="danger" (click) = removeData(doughnutChart,doughnutChart2)>Remover Dado</button>
+    <button ion-button color="secondary" (click)="downloadPDF()">download Grafico</button>
+  </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-3>
+        <ion-item>
+        <ion-label>Data inicial: </ion-label>
+        <ion-input type="date" value="2018-10-18" [(ngModel)]="diaInicial">
+        </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Data Final: </ion-label>
+            <ion-input value="2018-10-18" type="date" [(ngModel)]="diaFinal">
+            </ion-input >
+            </ion-item>
+    </ion-col>
+  </ion-row>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
   <canvas #doughnutCanvas height="100px"></canvas>
-  <canvas #doughnutCanvas2 hidden height="21cm" width="29.7cm">
+  <canvas #doughnutCanvas2 hidden height="100" width="200">
   </canvas>
  <!--
    <div>
@@ -32,10 +55,9 @@
  </div>
 -->
          
-
-</div>
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-  <button ion-button (click) = teste()></button>
-  <button ion-button (click)="downloadPDF()">download</button>
-  <button ion-button (click)="downloadTeste()">download2</button>
+  
+  
+<!--<button ion-button (click)="downloadTeste()">download2</button>
+<button ion-button secondary menuToggle>Toggle Menu</button>
+  -->
 </ion-content>
